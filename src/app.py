@@ -4,17 +4,17 @@ from fastapi import FastAPI, HTTPException
 from fastapi.requests import Request
 from routes.userRoutes import router
 
-app = FastAPI()
+app = FastAPI(docs_url=None, redoc_url=None)
 app.include_router(router)
 
 
-@app.get("/")
+@app.get("/", status_code=200)
 def home(request: Request):
     if "accessToken" not in request.cookies:
         raise HTTPException(status_code=401, detail="Not Authorized!!")
 
-    return "hello world"
+    return "you are most welcome!!!"
 
 
 if __name__ == "__main__":
-    uvicorn.run(app="app:app", host="0.0.0.0", reload=True, port=8000)
+    uvicorn.run(app="app:app", host="0.0.0.0", port=8000)
